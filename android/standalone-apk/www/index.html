@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#003366">
+    <title>Canals Workbench</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #1a1a1a;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .header {
+            background: linear-gradient(135deg, #003366 0%, #0066aa 100%);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header h1 { font-size: 1.4em; font-weight: 600; }
+        .header .subtitle { font-size: 0.85em; opacity: 0.85; }
+        .unit-toggle {
+        background: rgba(255,255,255,0.25);
+        color: white;
+        border: none;
+        padding: 8px 14px;
+        border-radius: 6px;
+        font-size: 0.95em;
+        font-weight: 600;
+        cursor: pointer;
+        margin-right: 8px;
+        min-height: 44px;
+    }
+    .menu-toggle {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 1.2em;
+            cursor: pointer;
+            min-width: 44px;
+            min-height: 44px;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 280px;
+            background: #2c3e50;
+            color: white;
+            transform: translateX(-100%);
+            transition: transform 0.25s;
+            z-index: 1000;
+            overflow-y: auto;
+            padding-top: 70px;
+        }
+        .sidebar.open { transform: translateX(0); }
+        .sidebar-item {
+            display: block;
+            padding: 14px 20px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            font-size: 1em;
+            cursor: pointer;
+            min-height: 48px;
+        }
+        .sidebar-item:active { background: rgba(255,255,255,0.1); }
+        .sidebar-item.active { background: #0066aa; }
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+            display: none;
+            z-index: 999;
+        }
+        .overlay.show { display: block; }
+        .content { padding: 20px; max-width: 700px; margin: 0 auto; }
+        .form-section {
+            background: white;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .form-section h2 {
+            font-size: 1.1em;
+            color: #003366;
+            margin-bottom: 14px;
+            border-bottom: 2px solid #e8f0f8;
+            padding-bottom: 6px;
+        }
+        .input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 8px;
+        }
+        .input-row label {
+            flex: 1;
+            font-size: 0.95em;
+            color: #444;
+        }
+        .input-row input {
+            flex: 1;
+            padding: 10px 12px;
+            font-size: 1em;
+            border: 1px solid #d0d0d0;
+            border-radius: 6px;
+            background: #fafafa;
+            color: #1a1a1a;
+            min-height: 44px;
+        }
+        .input-row input:focus { outline: none; border-color: #0066aa; background: white; }
+        .input-row .unit { font-size: 0.9em; color: #777; min-width: 50px; }
+        button.primary {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #003366;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            min-height: 48px;
+        }
+        button.primary:active { background: #001a33; }
+        button.secondary {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+        button.success {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        .results {
+            background: white;
+            border-radius: 8px;
+            padding: 18px;
+            margin-top: 14px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .results h2 {
+            font-size: 1.1em;
+            color: #0066aa;
+            margin-bottom: 14px;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .result-item {
+            background: #f0f7fc;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid #0066aa;
+        }
+        .result-item .label {
+            font-size: 0.8em;
+            color: #555;
+            margin-bottom: 4px;
+        }
+        .result-item .value {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #003366;
+        }
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 0.95em;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 0.95em;
+        }
+        .info {
+            background: #fff3cd;
+            color: #856404;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 12px 0;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        .canvas-wrap {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-align: center;
+        }
+        canvas { max-width: 100%; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🌊 Canals Workbench</h1>
+            <div class="subtitle">Hydraulic engineering calculator</div>
+        </div>
+        <button class="unit-toggle" onclick="toggleUnits()" id="unitToggle">SI</button>
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-item active" data-form="openChannel">🏞 Open Channel Design</div>
+        <div class="sidebar-item" data-form="sluiceGate">🚰 Sluice Gate</div>
+        <div class="sidebar-item" data-form="lacey">🌾 Earth Canal — Lacey</div>
+        <div class="sidebar-item" data-form="manning">🌾 Earth Canal — Manning</div>
+        <div class="sidebar-item" data-form="flowProfile">📈 Flow Profile</div>
+        <div class="sidebar-item" data-form="hydraulicJump">🌊 Hydraulic Jump</div>
+        <div class="sidebar-item" data-form="waterHammer">💧 Water Hammer</div>
+        <div class="sidebar-item" data-form="about">ℹ️ About</div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <div class="content" id="content">
+        <!-- Form content injected by JS -->
+    </div>
+
+    <!-- Include our JS -->
+    <script src="algorithms.js"></script>
+    <script src="units.js"></script>
+    <script src="examples.js"></script>
+    <script src="app.js"></script>
+    <script src="lib/jspdf.umd.min.js"></script>
+</body>
+</html>

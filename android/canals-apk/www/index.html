@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#003366">
+    <title>Canals Workbench</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #003366 0%, #0066aa 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+        .container { max-width: 600px; margin: 0 auto; padding-top: 5vh; }
+        h1 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 0.2em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            text-align: center;
+            opacity: 0.85;
+            font-size: 1.1em;
+            margin-bottom: 2em;
+        }
+        .card {
+            background: rgba(255,255,255,0.95);
+            color: #003366;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .card h2 {
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            color: #003366;
+        }
+        .card p {
+            font-size: 0.95em;
+            color: #334;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        button, .btn {
+            display: block;
+            width: 100%;
+            padding: 14px 20px;
+            background: #003366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        button:active, .btn:active { background: #001a33; transform: scale(0.98); }
+        .btn-secondary { background: #4A6FA5; }
+        .btn-secondary:active { background: #2A4A8A; }
+        input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            font-size: 1.05em;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            color: #003366;
+        }
+        input[type="text"]:focus { outline: none; border-color: #003366; }
+        .status {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-size: 0.9em;
+            display: none;
+        }
+        .status.show { display: block; }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .footer {
+            text-align: center;
+            font-size: 0.85em;
+            opacity: 0.7;
+            margin-top: 30px;
+        }
+        .icon { font-size: 1.3em; margin-right: 6px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌊 Canals Workbench</h1>
+        <p class="subtitle">Hydraulic engineering calculator</p>
+
+        <div class="card">
+            <h2>☁️ Use Streamlit Cloud</h2>
+            <p>Connect to the public deployment (recommended). Works anywhere with internet.</p>
+            <button id="btn-cloud" onclick="connectCloud()">
+                <span class="icon">🚀</span> Open Cloud Version
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>💻 Connect to Your Laptop</h2>
+            <p>Run Streamlit on your laptop, then enter its IP address below. Works on local Wi-Fi only.</p>
+            <input type="text" id="laptop-ip" placeholder="192.168.1.42:8501" />
+            <button class="btn-secondary" onclick="connectLaptop()">
+                <span class="icon">🔌</span> Connect
+            </button>
+        </div>
+
+        <div class="status" id="status"></div>
+
+        <div class="card">
+            <h2>📘 How to use</h2>
+            <p>
+                1. <b>Choose cloud or laptop</b> above<br/>
+                2. <b>Pick a calculation</b> from the sidebar<br/>
+                3. <b>Enter values</b> in the form<br/>
+                4. <b>Tap Compute</b> — instant results<br/>
+                5. <b>Download PDF report</b> at the bottom
+            </p>
+        </div>
+
+        <p class="footer">
+            Canals Workbench v1.4 · Abbas A. Hebah · MIT License
+        </p>
+    </div>
+
+    <script>
+        function setStatus(msg, kind) {
+            var el = document.getElementById('status');
+            el.textContent = msg;
+            el.className = 'status show ' + (kind || '');
+            if (kind === 'success') {
+                setTimeout(function() { el.className = 'status'; }, 3000);
+            }
+        }
+
+        function connectCloud() {
+            // Replace with your actual Streamlit Cloud URL after deploying
+            var url = 'https://share.streamlit.io/yourname/canals-workbench';
+            // Fallback: localhost for emulator testing
+            if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+                url = 'http://10.0.2.2:8501';
+            }
+            setStatus('Opening cloud version...', 'success');
+            setTimeout(function() { window.location.href = url; }, 500);
+        }
+
+        function connectLaptop() {
+            var ip = document.getElementById('laptop-ip').value.trim();
+            if (!ip) {
+                setStatus('Please enter an IP address and port', 'error');
+                return;
+            }
+            if (!/^[\d.]+:\d+$/.test(ip)) {
+                setStatus('Format should be like 192.168.1.42:8501', 'error');
+                return;
+            }
+            var url = 'http://' + ip;
+            setStatus('Connecting to ' + url + '...', 'success');
+            setTimeout(function() { window.location.href = url; }, 500);
+        }
+
+        // Pre-fill with last used IP from localStorage
+        var last = localStorage.getItem('canals_laptop_ip');
+        if (last) {
+            document.getElementById('laptop-ip').value = last;
+        }
+        // Save on connect
+        document.querySelector('button.btn-secondary').addEventListener('click', function() {
+            var ip = document.getElementById('laptop-ip').value.trim();
+            if (ip) localStorage.setItem('canals_laptop_ip', ip);
+        });
+    </script>
+</body>
+</html>

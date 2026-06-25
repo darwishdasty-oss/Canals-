@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#003366">
+    <title>Canals Workbench - Tablet</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f7fa;
+            color: #1a1a1a;
+            -webkit-user-select: none;
+            user-select: none;
+            font-size: 18px;     /* BIGGER default for tablets */
+        }
+        .header {
+            background: linear-gradient(135deg, #003366 0%, #0066aa 100%);
+            color: white;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 { font-size: 1.8em; font-weight: 700; }
+        .header .subtitle { font-size: 0.9em; opacity: 0.85; margin-top: 2px; }
+        .header-buttons { display: flex; gap: 12px; }
+        .header-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            min-height: 48px;
+        }
+        .header-btn:active { background: rgba(255,255,255,0.35); }
+
+        /* TABLET LAYOUT: 2 columns */
+        .tablet-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            min-height: calc(100vh - 90px);
+        }
+
+        .sidebar {
+            background: #2c3e50;
+            color: white;
+            padding: 16px 0;
+            overflow-y: auto;
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            color: white;
+            font-size: 1.05em;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            cursor: pointer;
+            min-height: 56px;
+            gap: 12px;
+        }
+        .sidebar-item:hover { background: rgba(255,255,255,0.08); }
+        .sidebar-item.active { background: #0066aa; }
+        .sidebar-item .icon { font-size: 1.5em; }
+
+        .content {
+            padding: 28px;
+            overflow-y: auto;
+            max-width: 900px;
+        }
+        .form-section, .results {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .form-section h2 {
+            font-size: 1.5em;
+            color: #003366;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #e8f0f8;
+            padding-bottom: 10px;
+        }
+        .results h2 {
+            font-size: 1.4em;
+            color: #0066aa;
+            margin-bottom: 18px;
+        }
+        .input-row {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 0.7fr;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+        .input-row label {
+            font-size: 1em;
+            color: #333;
+        }
+        .input-row input, .input-row select {
+            padding: 14px 16px;
+            font-size: 1.05em;
+            border: 1.5px solid #d0d0d0;
+            border-radius: 8px;
+            background: #fafafa;
+            color: #1a1a1a;
+            min-height: 52px;
+        }
+        .input-row input:focus, .input-row select:focus { outline: none; border-color: #0066aa; background: white; }
+        .input-row .unit { font-size: 0.95em; color: #777; }
+        button.primary {
+            padding: 18px;
+            background: #003366;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+            min-height: 60px;
+        }
+        button.primary:active { background: #001a33; }
+        button.success {
+            padding: 18px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+            min-height: 60px;
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+        }
+        .result-item {
+            background: #f0f7fc;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 4px solid #0066aa;
+        }
+        .result-item .label {
+            font-size: 0.85em;
+            color: #555;
+            margin-bottom: 6px;
+        }
+        .result-item .value {
+            font-size: 1.6em;
+            font-weight: 700;
+            color: #003366;
+        }
+        .error, .success, .info {
+            padding: 18px;
+            border-radius: 8px;
+            margin: 16px 0;
+            font-size: 1em;
+            line-height: 1.5;
+        }
+        .error { background: #f8d7da; color: #721c24; }
+        .success { background: #d4edda; color: #155724; }
+        .info { background: #fff3cd; color: #856404; }
+        .canvas-wrap {
+            background: white;
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 16px;
+            text-align: center;
+        }
+        canvas { max-width: 100%; height: auto; }
+        .example-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+        .example-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+        .example-card h2 { font-size: 1.2em; color: #003366; margin-bottom: 10px; }
+        .example-card p { font-size: 0.95em; color: #555; line-height: 1.5; margin-bottom: 10px; }
+        .example-card .goto { font-size: 0.85em; color: #0066aa; font-weight: 600; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🌊 Canals Workbench</h1>
+            <div class="subtitle">Hydraulic engineering calculator — Tablet Edition</div>
+        </div>
+        <div class="header-buttons">
+            <button class="header-btn" onclick="toggleUnits()" id="unitToggle">SI</button>
+            <button class="header-btn" onclick="toggleExamples()">📚 Examples</button>
+        </div>
+    </div>
+
+    <div class="tablet-layout">
+        <div class="sidebar">
+            <div class="sidebar-item active" data-form="openChannel"><span class="icon">🏞</span><span>Open Channel</span></div>
+            <div class="sidebar-item" data-form="sluiceGate"><span class="icon">🚰</span><span>Sluice Gate</span></div>
+            <div class="sidebar-item" data-form="radialGate"><span class="icon">🚪</span><span>Radial Gate</span></div>
+            <div class="sidebar-item" data-form="siphon"><span class="icon">🌊</span><span>Siphon</span></div>
+            <div class="sidebar-item" data-form="pressureBreaker"><span class="icon">⛰</span><span>Pressure Breaker</span></div>
+            <div class="sidebar-item" data-form="lacey"><span class="icon">🌾</span><span>Lacey</span></div>
+            <div class="sidebar-item" data-form="manning"><span class="icon">🌾</span><span>Manning</span></div>
+            <div class="sidebar-item" data-form="flowProfile"><span class="icon">📈</span><span>Flow Profile</span></div>
+            <div class="sidebar-item" data-form="hydraulicJump"><span class="icon">🌊</span><span>Hydraulic Jump</span></div>
+            <div class="sidebar-item" data-form="waterHammer"><span class="icon">💧</span><span>Water Hammer</span></div>
+            <div class="sidebar-item" data-form="examples"><span class="icon">🌍</span><span>Examples</span></div>
+            <div class="sidebar-item" data-form="about"><span class="icon">ℹ️</span><span>About</span></div>
+        </div>
+        <div class="content" id="content"></div>
+    </div>
+
+    <script src="algorithms.js"></script>
+    <script src="units.js"></script>
+    <script src="examples.js"></script>
+    <script src="app.js"></script>
+    <script src="lib/jspdf.umd.min.js"></script>
+    <script>
+        // Tablet-specific: bind sidebar events differently
+        document.querySelectorAll('.sidebar-item').forEach(el => {
+            el.addEventListener('click', () => setForm(el.dataset.form));
+        });
+    </script>
+</body>
+</html>

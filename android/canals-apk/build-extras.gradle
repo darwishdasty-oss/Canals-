@@ -1,0 +1,5 @@
+android.signingConfigs.release.storeFile file("../keystore/canals-release.keystore")
+android.signingConfigs.release.storePassword "canals2026"
+android.signingConfigs.release.keyAlias "canals"
+android.signingConfigs.release.keyPassword "canals2026"
+android.buildTypes.release.signingConfig android.signingConfigs.release
