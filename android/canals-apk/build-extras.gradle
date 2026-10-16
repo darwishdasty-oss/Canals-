@@ -1,5 +1,17 @@
-android.signingConfigs.release.storeFile file("../keystore/canals-release.keystore")
-android.signingConfigs.release.storePassword "canals2026"
-android.signingConfigs.release.keyAlias "canals"
-android.signingConfigs.release.keyPassword "canals2026"
-android.buildTypes.release.signingConfig android.signingConfigs.release
+// Signing secrets are read from local.properties (untracked). Never hardcode them here.
+def keystoreProps = new Properties()
+def keystorePropsFile = file("local.properties")
+if (!keystorePropsFile.exists()) {
+    keystorePropsFile = rootProject.file("local.properties")
+}
+if (keystorePropsFile.exists()) {
+    keystorePropsFile.withInputStream { keystoreProps.load(it) }
+    android.signingConfigs.release.storeFile file(keystoreProps['STORE_FILE'])
+    android.signingConfigs.release.storePassword keystoreProps['STORE_PASSWORD']
+    android.signingConfigs.release.keyAlias keystoreProps['KEY_ALIAS']
+    android.signingConfigs.release.keyPassword keystoreProps['KEY_PASSWORD']
+    android.buildTypes.release.signingConfig android.signingConfigs.release
+} else {
+    // No local.properties: fall back to debug signing so CI builds still succeed.
+    android.buildTypes.release.signingConfig android.signingConfigs.debug
+}
