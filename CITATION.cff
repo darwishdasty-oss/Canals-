@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+title: "Canals: an open-source Python workbench for open-channel hydraulic design"
+authors:
+  - family-names: Hebah
+    given-names: Abbas Ahmed Mohammed
+    orcid: "https://orcid.org/0009-0000-5689-2157"
+    affiliation: "Sana'a University"
+    email: "abbas74.hebah@gmail.com"
+version: 1.4.0
+date-released: "2026-06-27"  # update to the actual v1.4.0 release date if you re-tag
+license: MIT
+repository-code: "https://github.com/darwishdasty-oss/Canals-"
+keywords:
+  - open-channel flow
+  - hydraulics
+  - irrigation
+  - hydraulic structures
+  - hydraulic jump
+  - water hammer
+abstract: "Standalone Python 3 / PySide6 workbench for classical open-channel hydraulic design: optimal sections (Manning), hydraulic structures (gates, siphons, pressure breakers), regime earth-canal design (Lacey, Kennedy), gradually varied flow profiles, hydraulic jumps with USBR stilling-basin selection, and water-hammer screening. Ships a GUI, a JSON-emitting CLI, and an importable Python API under the MIT license."

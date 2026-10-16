@@ -1,0 +1,30 @@
+{
+  "title": "Canals: an open-source Python workbench for open-channel hydraulic design",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Hebah, Abbas Ahmed Mohammed",
+      "orcid": "0009-0000-5689-2157",
+      "affiliation": "Sana'a University"
+    }
+  ],
+  "description": "Standalone Python 3 / PySide6 workbench for classical open-channel hydraulic design. Covers optimal section design (Manning), hydraulic structures (sluice/radial gates, siphons with cavitation check, pressure breakers), regime earth-canal design (Lacey, Kennedy), gradually varied flow profiles with the twelve-curve classification, hydraulic jumps with USBR stilling-basin selection, and water-hammer screening (Korteweg wave speed, Joukowsky surge). Includes a GUI, a JSON-emitting CLI, an importable Python API, and a CI-run unit test suite. MIT license.",
+  "access_right": "open",
+  "license": "MIT",
+  "keywords": [
+    "open-channel flow",
+    "hydraulics",
+    "irrigation",
+    "hydraulic structures",
+    "hydraulic jump",
+    "water hammer",
+    "Python"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/darwishdasty-oss/Canals-",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ]
+}
