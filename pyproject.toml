@@ -9,7 +9,7 @@ description = "Standalone Python 3 / PySide6 workbench for open-channel hydrauli
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Abbas A. Hebah", email = "abbas74.hebah@gmail.com"},
+    {name = "Abbas Ahmed Mohammed Hebah", email = "abbas74.hebah@gmail.com"},
 ]
 requires-python = ">=3.10"
 dependencies = [
@@ -25,9 +25,9 @@ canals = "canals_mdi:main"
 canals-cli = "canals.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/abbas-hebah/canals-workbench"
-Documentation = "https://github.com/abbas-hebah/canals-workbench/blob/main/docs/USER_GUIDE.md"
-Issues = "https://github.com/abbas-hebah/canals-workbench/issues"
+Homepage = "https://github.com/darwishdasty-oss/Canals-"
+Documentation = "https://github.com/darwishdasty-oss/Canals-/blob/main/docs/USER_GUIDE.md"
+Issues = "https://github.com/darwishdasty-oss/Canals-/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]

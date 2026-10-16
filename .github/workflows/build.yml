@@ -41,7 +41,7 @@ permissions:
 #  Reusable workflow inputs (for cross-workflow composition)
 # =====================================================================
 #  Use this workflow from others via:
-#    uses: abbas-hebah/canals-workbench/.github/workflows/build.yml@main
+#    uses: darwishdasty-oss/Canals-/.github/workflows/build.yml@main
 #    with:
 #      python_version: '3.11'
 

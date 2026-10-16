@@ -20,7 +20,7 @@ Original date:    2024
 Original version: 3.0 Professional
 Port: Abbas A. Hebah, 8 June 2026
 """
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 from .open_channel import (
     ChannelType, FlowRegime, ChannelGeometry, FlowParameters,

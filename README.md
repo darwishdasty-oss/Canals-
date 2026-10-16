@@ -32,8 +32,8 @@ canals-cli --help   # launches the CLI
 ### Option 2 — from source
 
 ```bash
-git clone https://github.com/abbas-hebah/canals-workbench.git
-cd canals-workbench
+git clone https://github.com/darwishdasty-oss/Canals-.git
+cd Canals-
 pip install -e .
 canals
 ```
@@ -116,18 +116,17 @@ canals_workbench/
 │   ├── build_linux.sh
 │   ├── build_windows.bat
 │   └── build_macos.sh
-└── figures/                 # documentation figures
 ```
 
 ## Relationship to CCW v1.4
 
 CCW v1.4 = Cavitation & Channel Workbench = Cavicuspill + EM-Py + **Canals** + Bridge + MDI shell
 
-This standalone package is just the **Canals** third of CCW, decoupled from the spillway-design and Falvey-analysis workflows. If you also need cavitation analysis, use CCW v1.4 (https://github.com/abbas-hebah/cavitation-channel-workbench).
+This standalone package is just the **Canals** third of CCW, decoupled from the spillway-design and Falvey-analysis workflows. If you also need spillway design and cavitation analysis, see the companion Spillway Workbench: https://github.com/darwishdasty-oss/spillway-workbench
 
 ## Author
 
-**Abbas A. Hebah** — Ph.D. Candidate, Department of Civil Engineering, Iran University of Science and Technology. abbas74.hebah@gmail.com
+**Abbas A. Hebah** — Ph.D. Candidate, Department of Civil Engineering, Sana'a University, Yemen. abbas74.hebah@gmail.com
 
 ## License
 
