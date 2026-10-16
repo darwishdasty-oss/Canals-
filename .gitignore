@@ -3,3 +3,10 @@
 *.keystore
 *.jks
 local.properties
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
