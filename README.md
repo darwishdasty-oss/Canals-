@@ -24,7 +24,7 @@ This is the **Canals sub-package of CCW** extracted into its own installable, di
 ### Option 1 — pip install (recommended)
 
 ```bash
-pip install canals-workbench
+pip install git+https://github.com/darwishdasty-oss/Canals-.git
 canals           # launches the GUI
 canals-cli --help   # launches the CLI
 ```
