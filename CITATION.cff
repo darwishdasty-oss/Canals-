@@ -8,7 +8,10 @@ authors:
     affiliation: "Sana'a University"
     email: "abbas74.hebah@gmail.com"
 version: 1.4.0
-date-released: "2026-06-27"  # update to the actual v1.4.0 release date if you re-tag
+date-released: "2026-10-17"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23427854"
 license: MIT
 repository-code: "https://github.com/darwishdasty-oss/Canals-"
 keywords:

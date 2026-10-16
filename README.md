@@ -1,4 +1,5 @@
 # Canals — Open-Channel Design Workbench
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23427854.svg)](https://doi.org/10.5281/zenodo.23427854)
 
 A standalone Python 3 / PySide6 workbench for open-channel hydraulic design, decoupled from the Cavitation & Channel Workbench (CCW) v1.4.
 

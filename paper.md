@@ -1,10 +1,4 @@
 ---
-# JOSS paper for the Canals workbench — prepared 2026-10-17.
-# Finalization steps before submission (see SUBMISSION_CHECKLIST.md):
-#   1. Mint the Zenodo DOI (checklist step C) and uncomment/replace `archive-doi`.
-#   2. Confirm author affiliation (Sana'a University vs. Iran University of
-#      Science and Technology) and add co-authors if applicable.
-#   3. Keep `date:` equal to the actual v1.4.0 release/submission date.
 title: 'Canals: an open-source Python workbench for open-channel hydraulic design'
 tags:
   - Python
@@ -23,7 +17,7 @@ affiliations:
 date: 17 October 2026
 bibliography: paper.bib
 repository-code: https://github.com/darwishdasty-oss/Canals-
-# archive-doi: 10.5281/zenodo.XXXXXXX   # <-- fill in after minting the Zenodo deposit
+archive-doi: 10.5281/zenodo.23427854
 ---
 
 # Summary
