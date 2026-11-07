@@ -7,11 +7,13 @@ authors:
     orcid: "https://orcid.org/0009-0000-5689-2157"
     affiliation: "Sana'a University"
     email: "abbas74.hebah@gmail.com"
-version: 1.4.0
-date-released: "2026-10-17"
+version: 1.4.1
+date-released: "2026-11-07"  # DEFAULT — release-zenodo-v141.sh re-stamps with the actual UTC tagging date
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.23427854"
+    value: "10.5281/zenodo.23427855"  # Zenodo version DOI (the citable DOI for the published v1.4.0 record)
+  - type: doi
+    value: "10.5281/zenodo.23427854"  # Zenodo concept DOI — auto-resolves to the newest version; publishing v1.4.1 mints the next version DOI
 license: MIT
 repository-code: "https://github.com/darwishdasty-oss/Canals-"
 keywords:
@@ -21,4 +23,4 @@ keywords:
   - hydraulic structures
   - hydraulic jump
   - water hammer
-abstract: "Standalone Python 3 / PySide6 workbench for classical open-channel hydraulic design: optimal sections (Manning), hydraulic structures (gates, siphons, pressure breakers), regime earth-canal design (Lacey, Kennedy), gradually varied flow profiles, hydraulic jumps with USBR stilling-basin selection, and water-hammer screening. Ships a GUI, a JSON-emitting CLI, and an importable Python API under the MIT license."
+abstract: "Standalone Python 3 / PySide6 workbench for classical open-channel hydraulic design: optimal sections (Manning), hydraulic structures (gates, siphons, pressure breakers), regime earth-canal design (Lacey, Kennedy), gradually varied flow profiles, hydraulic jumps with USBR stilling-basin selection, and water-hammer screening. Ships a GUI, a JSON-emitting CLI, and an importable Python API under the MIT license. v1.4.1 corrects the Lacey velocity normalization, the regime-geometry root selection, and the Manning roughness handling in the earth-canal designer; results were verified against an independent 50-check campaign, and remaining limitations are tracked as GitHub issues."

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "canals-workbench"
-version = "1.4.0"
+version = "1.4.1"
 description = "Standalone Python 3 / PySide6 workbench for open-channel hydraulic design (open channels, structures, earth canals, flow profile, hydraulic jump, water hammer)."
 readme = "README.md"
 license = {text = "MIT"}

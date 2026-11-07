@@ -1,14 +1,16 @@
 {
   "title": "Canals: an open-source Python workbench for open-channel hydraulic design",
   "upload_type": "software",
+  "version": "v1.4.1",
+  "publication_date": "2026-11-07",
   "creators": [
     {
       "name": "Hebah, Abbas Ahmed Mohammed",
-      "orcid": "0009-0000-5689-2157",
-      "affiliation": "Sana'a University"
+      "affiliation": "Sana'a University",
+      "orcid": "https://orcid.org/0009-0000-5689-2157"
     }
   ],
-  "description": "Standalone Python 3 / PySide6 workbench for classical open-channel hydraulic design. Covers optimal section design (Manning), hydraulic structures (sluice/radial gates, siphons with cavitation check, pressure breakers), regime earth-canal design (Lacey, Kennedy), gradually varied flow profiles with the twelve-curve classification, hydraulic jumps with USBR stilling-basin selection, and water-hammer screening (Korteweg wave speed, Joukowsky surge). Includes a GUI, a JSON-emitting CLI, an importable Python API, and a CI-run unit test suite. MIT license.",
+  "description": "<p>Standalone Python 3 / PySide6 workbench for classical open-channel hydraulic design: optimal sections (Manning), hydraulic structures (gates, siphons, pressure breakers), regime earth-canal design (Lacey, Kennedy), gradually varied flow profiles, hydraulic jumps with USBR stilling-basin selection, and water-hammer screening. Ships a GUI, a JSON-emitting CLI, and an importable Python API under the MIT license.</p><p><strong>v1.4.1 maintenance release.</strong> Corrects the Lacey velocity normalization (the 140 constant was applied twice), the regime-geometry root selection (analytic quadratic instead of a single-start fsolve, with an explicit infeasibility flag), and the Manning roughness handling in <code>manning_design()</code> (the passed n is used instead of a hardcoded 1/0.025). Implementations were verified against an independent 50-check campaign executed through both the Python API and the CLI; remaining limitations (Kennedy width bound on mild slopes, CLI water-hammer closure-time parity) are tracked as GitHub issues on the v1.4.1 milestone.</p>",
   "access_right": "open",
   "license": "MIT",
   "keywords": [
@@ -18,13 +20,15 @@
     "hydraulic structures",
     "hydraulic jump",
     "water hammer",
-    "Python"
+    "Lacey regime theory",
+    "Kennedy regime theory",
+    "stilling basin"
   ],
   "related_identifiers": [
     {
       "identifier": "https://github.com/darwishdasty-oss/Canals-",
       "relation": "isSupplementTo",
-      "resource_type": "software"
+      "scheme": "url"
     }
   ]
 }
