@@ -157,7 +157,7 @@ class EarthCanalForm(QtWidgets.QMdiSubWindow):
             z = self.ec_z.value()
             res = self.designer.lacey_theory_design(Q, f, z)
             self.result_table.populate(res)
-            self._plot_section(z, res.get('depth', 2.0), res.get('bottom_width', 1.5),
+            self._plot_section(z, res.get('depth', 2.0), res.get('bed_width', res.get('bottom_width', 1.5)),
                                f"Lacey: Q={Q} m³/s, f={f}")
             self.btn_report.form_name = 'earth_canal_lacey'
             self.btn_report.set_result(
@@ -176,7 +176,7 @@ class EarthCanalForm(QtWidgets.QMdiSubWindow):
             res = self.designer.kennedy_theory_design(Q, n, S)
             self.result_table.populate(res)
             self._plot_section(res.get('side_slope', 0.5), res.get('depth', 2.0),
-                               res.get('bottom_width', 1.5),
+                               res.get('bed_width', res.get('bottom_width', 1.5)),
                                f"Kennedy: Q={Q} m³/s, n={n}, S={S}")
         except Exception as e:
             import traceback
@@ -190,7 +190,7 @@ class EarthCanalForm(QtWidgets.QMdiSubWindow):
             z = self.ec_z.value()
             res = self.designer.manning_design(Q, n, S, z)
             self.result_table.populate(res)
-            self._plot_section(z, res.get('depth', 2.0), res.get('bottom_width', 1.5),
+            self._plot_section(z, res.get('depth', 2.0), res.get('bed_width', res.get('bottom_width', 1.5)),
                                f"Manning: Q={Q} m³/s, n={n}, S={S}")
             self.btn_report.form_name = 'earth_canal_manning'
             self.btn_report.set_result(
@@ -248,7 +248,7 @@ class EarthCanalForm(QtWidgets.QMdiSubWindow):
                     if isinstance(t, dict):
                         theories.append(theory_name.capitalize())
                         depths.append(t.get('depth', 0))
-                        widths.append(t.get('bottom_width', 0))
+                        widths.append(t.get('bed_width', t.get('bottom_width', 0)))
             if theories:
                 x = np.arange(len(theories))
                 width = 0.35

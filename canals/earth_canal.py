@@ -75,8 +75,13 @@ class EarthCanalDesigner:
             """
             حساب المعاملات الأساسية لنظرية لاسي
             """
-            # السرعة الحرجة (معادلة لاسي الأساسية)
-            V = 0.4382 * (Q * f**2 / 140)**(1/6)  # م/ث
+            # السرعة الحرجة (معادلة لاسي الأساسية) — SI
+            # Lacey regime velocity: V = (Q f^2 / 140)^(1/6)  [equivalently
+            # V = 0.4382 (Q f^2)^(1/6), since 0.4382 = 140^(-1/6)].
+            # FIX (F1, v1.4.1): the previous release combined BOTH equivalent
+            # forms (kept the 0.4382 prefactor AND the /140 denominator),
+            # underestimating V by a factor 140^(1/6) = 2.28 (-56.2%).
+            V = (Q * f**2 / 140.0)**(1.0 / 6.0)  # م/ث
             
             # المساحة المقطعية
             A = Q / V  # م²
@@ -95,15 +100,22 @@ class EarthCanalDesigner:
             z = side_slope
             k = 2 * np.sqrt(1 + z**2)
             
-            # حل لإيجاد y (عمق المياه)
-            def equation_for_y(y):
-                B = (A - z * y**2) / y
-                P_calc = B + k * y
-                return P_calc - P
-            
-            # استخدام fsolve لحل المعادلة
-            y_initial_guess = np.sqrt(A / (2 + z))  # تخمين مبدئي
-            y_solution = fsolve(equation_for_y, y_initial_guess)[0]
+            # حل لإيجاد y (عمق المياه): نظام A = B y + z y^2 ، P = B + k y
+            # يكافئ المعادلة التربيعية (k - z) y^2 - P y + A = 0
+            # FIX (F1b, v1.4.1): solve the quadratic ANALYTICALLY and select the
+            # physical (smaller) root with B > 0. The previous fsolve call used a
+            # single initial guess and could converge to the spurious large root
+            # (y > sqrt(A/z) -> negative bed width); this was masked in release
+            # 1.4.0 because the F1 velocity bug made the system infeasible.
+            a_coef = k - z  # > 0 for every z >= 0
+            disc = P * P - 4.0 * a_coef * A
+            if disc < 0:
+                # No real trapezoid satisfies both A = Q/V and P = 4.75 sqrt(Q):
+                # report an infeasible design explicitly instead of a silent
+                # off-root geometry (see Findings register, F1b).
+                y_solution = np.nan
+            else:
+                y_solution = (P - np.sqrt(disc)) / (2.0 * a_coef)  # smaller root
             
             # حساب عرض القاعدة
             B = (A - z * y_solution**2) / y_solution
@@ -252,11 +264,6 @@ class EarthCanalDesigner:
         """
         تصميم إضافي باستخدام معادلة مانينج (للأغراض المقارنة)
         """
-        def solve_manning(y, Q, n, S, z):
-            B = (Q * n / (np.sqrt(S) * (B * y + z * y**2) * 
-                 (y/(B + 2*y*np.sqrt(1+z**2)))**(2/3))) - 1
-            return B
-        
         # البحث عن أفضل الأبعاد
         best_solution = None
         min_cost = float('inf')
@@ -265,8 +272,12 @@ class EarthCanalDesigner:
         
         for y in y_range:
             try:
+                # Manning: Q = (A/n) R^(2/3) S^(1/2) with the PASSED roughness n.
+                # FIX (F2, v1.4.1): previous release hardcoded (1/0.025) here,
+                # silently replacing the user roughness (bias = 0.025/n - 1,
+                # e.g. +11.11% for n = 0.0225) and shifting the whole design.
                 B = fsolve(lambda B: (B*y + side_slope*y**2) * 
-                          (1/0.025) * ((B*y + side_slope*y**2)/
+                          (1.0 / n) * ((B*y + side_slope*y**2)/
                           (B + 2*y*np.sqrt(1+side_slope**2)))**(2/3) * 
                           np.sqrt(S) - Q, 2.0)[0]
                 
