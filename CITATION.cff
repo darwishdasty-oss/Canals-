@@ -11,7 +11,7 @@ version: 1.4.2
 date-released: 2026-11-08
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.24038294"  # Zenodo version DOI (the citable DOI for the published v1.4.0 record)
+    value: "10.5281/zenodo.24041738"  # Zenodo version DOI (the citable DOI for the published v1.4.0 record)
   - type: doi
     value: "10.5281/zenodo.23427854"  # Zenodo concept DOI — auto-resolves to the newest version; publishing v1.4.1 mints the next version DOI
 license: MIT
